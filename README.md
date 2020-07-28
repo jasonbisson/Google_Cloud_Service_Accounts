@@ -23,9 +23,11 @@ create_key.sh *environment*
 delete_key.sh *environment*
 
 ### Validate user-managed key works with the latest key
-Update IAM to add Storage viewer role to the new Service Account 
-validate_key.sh *environment*
+```
+Update IAM to add Storage viewer role to the new Service Account via gcloud or console.
 
+validate_key.sh *environment*
+```
 
 ## External Documentation
 
