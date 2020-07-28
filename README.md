@@ -10,7 +10,7 @@ Download Git repository with sample Python code to list storage buckets
 https://github.com/GoogleCloudPlatform/python-docs-samples.git
 
 ## Usage
-###Creates a service account with environment name:
+### Creates a service account with environment name:
 
 create_account.sh *environment* 
 
