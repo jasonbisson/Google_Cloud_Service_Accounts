@@ -40,10 +40,6 @@ function delete_service_account () {
     gcloud iam service-accounts delete ${environment}'@'${project_id}.iam.gserviceaccount.com --project ${project_id}
 }
 
-function delete_secret () {
-    gcloud secrets delete ${environment} --project ${project_id}
-}
 
 check_variables
 delete_service_account
-delete_secret
