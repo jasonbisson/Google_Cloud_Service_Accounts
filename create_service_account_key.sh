@@ -18,9 +18,9 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-export environment=$1
+export name=$1
 export project_id=$(gcloud config list --format 'value(core.project)')
-export service_account=$(gcloud iam service-accounts describe ${environment}@${project_id}.iam.gserviceaccount.com --project ${project_id})
+export service_account=$(gcloud iam service-accounts describe ${name}@${project_id}.iam.gserviceaccount.com --project ${project_id})
 
 function check_variables () {
     if [  -z "${project_id}" ]; then
@@ -40,14 +40,14 @@ function check_variables () {
 
 
 function create_secret () {
-    gcloud secrets versions list ${environment} |grep enabled
+    gcloud secrets versions list ${name} |grep enabled
     result=$?
     if [ $result -eq 0 ]; then
         #Adds version to an existing secret
-        gcloud iam service-accounts keys create - --iam-account="${environment}@$project_id.iam.gserviceaccount.com" | base64 | gcloud secrets versions add ${environment} --data-file -
+        gcloud iam service-accounts keys create - --iam-account="${name}@$project_id.iam.gserviceaccount.com" | base64 | gcloud secrets versions add ${name} --data-file -
     else
         #Creates a new secret
-        gcloud iam service-accounts keys create - --iam-account="${environment}@$project_id.iam.gserviceaccount.com" | base64 | gcloud secrets create ${environment} --replication-policy=automatic --data-file -
+        gcloud iam service-accounts keys create - --iam-account="${name}@$project_id.iam.gserviceaccount.com" | base64 | gcloud secrets create ${name} --replication-policy=automatic --data-file -
     fi
     #clean up dash
     rm -

@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[[ "$#" -ne 2 ]] && { echo "Usage : `basename "$0"` --environment <unique_environment_flag>"; exit 1; }
-[[ "$1" = "--environment" ]] &&  export environment=$2
+[[ "$#" -ne 2 ]] && { echo "Usage : `basename "$0"` --name <unique_name_flag>"; exit 1; }
+[[ "$1" = "--name" ]] &&  export name=$2
 
 
 export project_id=$(gcloud config list --format 'value(core.project)')
-export service_account=$(gcloud iam service-accounts describe ${environment}@${project_id}.iam.gserviceaccount.com --project ${project_id})
+export service_account=$(gcloud iam service-accounts describe ${name}@${project_id}.iam.gserviceaccount.com --project ${project_id})
 
 function check_variables () {
     if [  -z "$project_id" ]; then
@@ -37,7 +37,7 @@ function check_variables () {
 }
 
 function delete_service_account () {
-    gcloud iam service-accounts delete ${environment}'@'${project_id}.iam.gserviceaccount.com --project ${project_id}
+    gcloud iam service-accounts delete ${name}'@'${project_id}.iam.gserviceaccount.com --project ${project_id}
 }
 
 

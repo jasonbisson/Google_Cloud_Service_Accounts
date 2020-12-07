@@ -18,12 +18,12 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-export environment=$1
+export name=$1
 export project_id=$(gcloud config list --format 'value(core.project)')
 
 function decrypt_file () {
-    gcloud secrets versions access latest --secret="${environment}" | base64 -D > $environment.json
-    export GOOGLE_APPLICATION_CREDENTIALS=$PWD/$(ls -t ${environment}*.json |head -1)
+    gcloud secrets versions access latest --secret="${name}" | base64 -D > $name.json
+    export GOOGLE_APPLICATION_CREDENTIALS=$PWD/$(ls -t ${name}*.json |head -1)
 }
 
 function check_buckets () {
@@ -31,7 +31,7 @@ function check_buckets () {
 }
 
 function remove_file () {
-    rm -f ${environment}*.json*
+    rm -f ${name}*.json*
 }
 
 decrypt_file

@@ -14,8 +14,8 @@
 # limitations under the License.
 
 
-[[ "$#" -ne 2 ]] && { echo "Usage : `basename "$0"` --environment <unique_environment_flag>"; exit 1; }
-[[ "$1" = "--environment" ]] &&  export environment=$2
+[[ "$#" -ne 2 ]] && { echo "Usage : `basename "$0"` --name <unique_name>"; exit 1; }
+[[ "$1" = "--name" ]] &&  export name=$2
 
 export project_id=$(gcloud config list --format 'value(core.project)')
 export requestor=$(gcloud config list --format 'value(core.account)')
@@ -38,14 +38,14 @@ function check_variables () {
         exit
     fi
     
-    if [ ${#environment} -lt 5 ]; then
+    if [ ${#name} -lt 5 ]; then
         printf "Service account must be between 6-30 characters\n"
         exit
     fi
 }
 
 function create_service_account () {
-    gcloud iam service-accounts create  ${environment} --display-name "${environment}" --description "Who: ${requestor} When: ${time}" --project ${project_id}
+    gcloud iam service-accounts create  ${name} --display-name "${name}" --description "Who: ${requestor} When: ${time}" --project ${project_id}
 }
 
 check_variables
